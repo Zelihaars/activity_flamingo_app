@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../Screens/RegistrationScreen.dart';
+
 class ElevatedButton extends StatelessWidget {
   final String btnText;
-  final Function onBtnPressed;
 
-  const ElevatedButton({required this.btnText,  Key? key, required this.onBtnPressed})
+  const ElevatedButton({this.btnText=">>>",  Key? key})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,8 @@ class ElevatedButton extends StatelessWidget {
       color: Colors.purple,
       borderRadius: BorderRadius.circular(30),
       child: MaterialButton(
-        onPressed: onBtnPressed(),
+        onPressed: () => Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const RegistrationScreen())),
         minWidth: 320,
         height: 60,
         child: Text(

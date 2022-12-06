@@ -8,6 +8,8 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
+
+
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -29,17 +31,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     width: 200,
                   ),
                   Text(
-                    'See what’s happening in the world right now',
+                    'Flamingo ',
                     style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+
                   ),
                 ],
               ),
               Column(
                 children: [
                   ElevatedButton(
-                    child: Text('Elevated Button'),
+                    child: Text('Giriş Yap'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
+                      primary: Colors.deepPurpleAccent,
+                      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // <-- Radius
+                      ),
                     ),
                     onPressed: () => Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => const LoginScreen())),
@@ -48,11 +55,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     height: 30,
                   ),
                   ElevatedButton(
-                    child: Text('Elevated Button'),
+                    child: Text('Kayıt ol'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
+                      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                      primary: Colors.deepPurpleAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // <-- Radius
+                      ),
                     ),
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => const RegistrationScreen())),
                   ),
                 ],
               )
