@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import '../Constants/Constants.dart';
 import '../Models/UserModel.dart';
 
-import 'flamingo_app/Models/Tweet.dart';
-import 'package:twitter/Screens/EditProfileScreen.dart';
-import 'package:twitter/Screens/WelcomeScreen.dart';
-import 'package:twitter/Services/DatabaseServices.dart';
-import 'package:twitter/Services/auth_service.dart';
-import 'package:twitter/Widgets/TweetContainer.dart';
+
 
 
 class ProfileScreen extends StatefulWidget {
@@ -26,8 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _followingCount = 0;
   bool _isFollowing = false;
   int _profileSegmentedValue = 0;
-  List<Tweet> _allTweets = [];
-  List<Tweet> _mediaTweets = [];
+ 
 
   Map<int, Widget> _profileTabs = <int, Widget>{
     0: Padding(
