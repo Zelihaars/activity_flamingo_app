@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Constants/Constants.dart';
 import 'package:twitter/Models/Activity.dart';
-import 'package:twitter/Models/Tweet.dart';
 import '../Models/UserModel.dart';
 
 class DatabaseServices {
