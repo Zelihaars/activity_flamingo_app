@@ -1,3 +1,4 @@
+import 'package:flamingo_app/Screens/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.purple,
         centerTitle: true,
         elevation: 0,
         title: Text(
@@ -66,15 +67,17 @@ class _LoginScreenState extends State<LoginScreen> {
               style: ElevatedButton.styleFrom(
                 elevation: 5,
                 padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                primary: Colors.deepPurpleAccent,
+                primary: Colors.purple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30), // <-- Radius
                 ),
               ),
               onPressed: ()async{
                 bool isValid=await AuthService.login(_email,_password);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => const FeedScreen()));
                 if(isValid){
-                  Navigator.pop(context);
+                  print("Giriş Yapıldı");
                 }else{
                   print("Giriş Yapılamadı");
                 }

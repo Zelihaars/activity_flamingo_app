@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flamingo_app/Screens/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/SliderScreen.dart';
 import 'package:flamingo_app/Screens/WelcomeScreen.dart';
 import 'package:flutter/material.dart';

@@ -19,7 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.purple,
         centerTitle: true,
         elevation: 0,
         title: Text(
@@ -99,7 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               style: ElevatedButton.styleFrom(
                 elevation: 5,
                 padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                primary: Colors.deepPurpleAccent,
+                primary: Colors.purple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30), // <-- Radius
                 ),

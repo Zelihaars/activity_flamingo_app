@@ -42,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ElevatedButton(
                     child: Text('Giriş Yap'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurpleAccent,
+                      primary: Colors.purple,
                       padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30), // <-- Radius
@@ -58,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: Text('Kayıt ol'),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                      primary: Colors.deepPurpleAccent,
+                      primary: Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30), // <-- Radius
                       ),
