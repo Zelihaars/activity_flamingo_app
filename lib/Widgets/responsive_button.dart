@@ -3,8 +3,8 @@ import 'package:flamingo_app/misc/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Screens/LoginScreen.dart';
-import '../Screens/RegistrationScreen.dart';
+import 'package:flamingo_app/Screens/login/LoginScreen.dart';
+import '../Screens/login/RegistrationScreen.dart';
 
 class ResponsiveButton extends StatelessWidget {
   bool? isResponsive;

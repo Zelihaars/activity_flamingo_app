@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Screens/RegistrationScreen.dart';
+import '../Screens/login/RegistrationScreen.dart';
 
 class ElevatedButton extends StatelessWidget {
   final String btnText;

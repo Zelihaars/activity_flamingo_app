@@ -1,6 +1,7 @@
+import 'package:flamingo_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flamingo_app/Screens/LoginScreen.dart';
-import 'package:flamingo_app/Screens/RegistrationScreen.dart';
+import 'package:flamingo_app/Screens/login/LoginScreen.dart';
+import 'package:flamingo_app/Screens/login/RegistrationScreen.dart';
 
 
 class WelcomeScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+
               Column(
                 children: [
                   SizedBox(
@@ -42,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ElevatedButton(
                     child: Text('Giriş Yap'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.purple,
+                      backgroundColor: kPrimaryColor,
                       padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30), // <-- Radius
@@ -57,8 +59,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ElevatedButton(
                     child: Text('Kayıt ol'),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
                       padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                      primary: Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30), // <-- Radius
                       ),

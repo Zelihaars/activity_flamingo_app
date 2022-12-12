@@ -1,4 +1,4 @@
-import 'package:flamingo_app/Screens/LoginScreen.dart';
+import 'package:flamingo_app/Screens/login/LoginScreen.dart';
 import 'package:flamingo_app/Widgets/app_large_text.dart';
 import 'package:flamingo_app/Widgets/app_text.dart';
 import 'package:flamingo_app/Widgets/responsive_button.dart';
@@ -7,7 +7,7 @@ import 'package:flamingo_app/misc/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'RegistrationScreen.dart';
+import 'login/RegistrationScreen.dart';
 class SliderScreen extends StatefulWidget {
   const SliderScreen({Key? key}) : super(key: key);
 

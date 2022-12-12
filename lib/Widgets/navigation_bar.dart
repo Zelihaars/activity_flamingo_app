@@ -1,8 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:flamingo_app/Screens/FeedScreeen.dart';
-import 'package:flamingo_app/Screens/LoginScreen.dart';
-import 'package:flamingo_app/Screens/ProfilScreen.dart';
+import 'package:flamingo_app/Screens/login/LoginScreen.dart';
+import 'package:flamingo_app/Screens/menus/HomeScreen.dart';
+import 'package:flamingo_app/Screens/menus/ProfilScreen.dart';
+import 'package:flamingo_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -21,12 +22,12 @@ class NavigationDrawer extends StatelessWidget {
     ),
   );
   Widget buildHeader(BuildContext context) =>Material(
-    color: Colors.purple,
+    color: kPrimaryColor,
     child:InkWell(
       onTap: ()=>{
         Navigator.pop(context),
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const ProfilScreen())),
+            .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId:'' ,))),
       },
       child: Container(
       padding: EdgeInsets.only(
@@ -66,7 +67,7 @@ class NavigationDrawer extends StatelessWidget {
          title:const Text('Anasayfa'),
          onTap: ()=>{
            Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const FeedScreen())),
+               .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
          },
       ),
         ListTile(
@@ -74,7 +75,7 @@ class NavigationDrawer extends StatelessWidget {
          title:const Text('Profilim'),
          onTap: ()=>{
            Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const ProfilScreen())),
+               .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
          },
       ),
          const Divider(color: Colors.purple),
@@ -83,7 +84,7 @@ class NavigationDrawer extends StatelessWidget {
          title:const Text('Favorilerim'),
          onTap: ()=>{
            Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const FeedScreen())),
+               .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
          },
 
   ),
@@ -94,7 +95,7 @@ class NavigationDrawer extends StatelessWidget {
 
           onTap: ()=>{
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const FeedScreen())),
+                .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
           },
       ),
         ListTile(
@@ -102,7 +103,7 @@ class NavigationDrawer extends StatelessWidget {
            title:const Text('Paylaşımlarım'),
            onTap: ()=>{
              Navigator.of(context)
-                 .push(MaterialPageRoute(builder: (context) => const FeedScreen())),
+                 .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
            },
       ),
         ListTile(

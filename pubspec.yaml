@@ -31,7 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_svg:
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +40,7 @@ dependency_overrides:
   firebase_core:
   cloud_firestore: ^3.1.13
   firebase_auth: ^3.3.14
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,9 @@ flutter:
   assets:
     - assets/images/flamingo.png
     - assets/images/plus.png
+    - assets/images/login.svg
+    - assets/images/register.svg
+    - assets/images/placeholder.png
     - assets/img/camping.jpg
     - assets/img/mountain.jpg
     - assets/img/trekking.jpg
