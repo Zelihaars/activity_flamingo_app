@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class ProfilScreen extends StatefulWidget {
   final String currentUserId;
   final String visitedUserId;
+
   const ProfilScreen({Key? key, required this.currentUserId, required this.visitedUserId}) : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class ProfilScreen extends StatefulWidget {
 class _ProfilScreenState extends State<ProfilScreen> {
   int _followersCount=0;
   int _followingCount=0;
+  bool _isFollowing=false;
 
   int _profileSegmentedValue=0;
   Map<int, Widget>_profileTabs = <int, Widget>{
@@ -89,13 +91,46 @@ class _ProfilScreenState extends State<ProfilScreen> {
       });
     }
   }
+
+  followOrUnfollow(){
+    if (_isFollowing) {
+      unFollowUser();
+    } else {
+      followUser();
+    }
+  }
+  unFollowUser() {
+    DatabaseServices.unFollowUser(widget.currentUserId, widget.visitedUserId);
+    setState(() {
+      _isFollowing = false;
+      _followersCount--;
+    });
+  }
+
+  followUser() {
+    DatabaseServices.followUser(widget.currentUserId, widget.visitedUserId);
+    setState(() {
+      _isFollowing = true;
+      _followersCount++;
+    });
+  }
+  setupIsFollowing() async {
+    bool isFollowingThisUser = await DatabaseServices.isFollowingUser(
+        widget.currentUserId, widget.visitedUserId);
+    setState(() {
+      _isFollowing = isFollowingThisUser;
+    });
+  }
+
+
+
   @override
   void initState(){
     super.initState();
     getFollowersCount();
     getFollowingCount();
+    setupIsFollowing();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +170,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:[
                           SizedBox.shrink(),
+                          widget.currentUserId==widget.visitedUserId?
                           PopupMenuButton(
                               icon:const Icon(
                                 Icons.more_horiz,
@@ -153,6 +189,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
 
                               }
                           )
+                              :SizedBox(),
                         ]
                     ),
                   )
@@ -170,15 +207,19 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         children: [
                           CircleAvatar(
                             radius: 45,
-                            backgroundImage: NetworkImage(userModel.profilePicture??'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                            backgroundImage: NetworkImage(userModel.profilePicture??'assets/images/placeholder.png'),
                           ),
+                          widget.currentUserId==widget.visitedUserId?
                           GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfileScreen(
+                            onTap: ()async{
+                              await Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfileScreen(
                                 user:userModel,
                               ),
                               ),
                               );
+                              setState(() {
+
+                              });
                             },
                             child: Container(
                               width: 100,
@@ -196,6 +237,29 @@ class _ProfilScreenState extends State<ProfilScreen> {
                                     fontSize: 17,
                                     color: kPrimaryColor,
                                     fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                              :GestureDetector(
+                            onTap: followOrUnfollow,
+                            child: Container(
+                              width: 100,
+                              height: 35,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color:  _isFollowing?kPrimaryColor:Colors.white,
+                                border: Border.all(color: kPrimaryColor),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  _isFollowing? 'Takip Ediliyor':'Takip Et',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color:  _isFollowing?Colors.white:kPrimaryColor,
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ),
@@ -222,7 +286,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     Row(
                       children: [
                         Text(
-                          '$_followingCount Takipçi',
+                          '$_followingCount Takip Edilen',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -231,7 +295,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         ),
                         SizedBox(width: 20,),
                           Text(
-                          '$_followersCount Takip Edilenler',
+                          '$_followersCount Takipçi',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

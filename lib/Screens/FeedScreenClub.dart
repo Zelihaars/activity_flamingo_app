@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../Widgets/navigation_bar.dart';
 
 class FeedScreenClub extends StatefulWidget {
-  const FeedScreenClub({Key? key}) : super(key: key);
+  const FeedScreenClub({Key? key,}) : super(key: key);
 
   @override
   State<FeedScreenClub> createState() => _FeedScreenClubState();
@@ -19,12 +19,10 @@ class FeedScreenClub extends StatefulWidget {
 
 class _FeedScreenClubState extends State<FeedScreenClub> {
   int _selectedTab=0;
-  List<Widget>_feedScreens=[
+  final List<Widget>_feedScreens=[
     HomeScreen(),
     AkisScreen(),
-    SearchScreen(),
     NotificationScreen(),
-
   ];
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,6 @@ class _FeedScreenClubState extends State<FeedScreenClub> {
         title: const Text('Clup Anasayfa'),
         backgroundColor: kPrimaryColor,
       ),
-      drawer: const NavigationDrawer(),
       body:_feedScreens.elementAt(_selectedTab),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,

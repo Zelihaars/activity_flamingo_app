@@ -7,7 +7,8 @@ import 'package:flamingo_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  final String currentUserId;
+  const NavigationDrawer({Key? key, required this.currentUserId,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) =>Drawer(
@@ -75,7 +76,8 @@ class NavigationDrawer extends StatelessWidget {
          title:const Text('Profilim'),
          onTap: ()=>{
            Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
+               .push(MaterialPageRoute(builder: (context) => const FeedScreen( currentUserId: '',
+             ))),
          },
       ),
          const Divider(color: Colors.purple),
