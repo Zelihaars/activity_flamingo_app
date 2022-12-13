@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flamingo_app/Models/UserModel.dart';
 import 'package:flamingo_app/constants.dart';
 class DatabaseServices{
 
@@ -14,5 +15,14 @@ class DatabaseServices{
     await followingRef.doc(userId).collection('userFollowing').get();
     return followingSnapshot.docs.length;
 
+  }
+  static void updateUserData(UserModel user) {
+    usersRef.doc(user.id).update({
+      'name': user.name,
+      'surname':user.surname,
+      'bio': user.bio,
+      'profilePicture': user.profilePicture,
+      'coverImage': user.coverImage,
+    });
   }
 }
