@@ -1,43 +1,23 @@
-import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flamingo_app/Screens/menusClub/FeedScreenClub.dart';
-import 'package:flamingo_app/Screens/login/LoginClub.dart';
-import 'package:flamingo_app/Screens/login/RegistrationScreen.dart';
+import 'package:flamingo_app/Screens/SliderScreen.dart';
+import 'package:flamingo_app/Screens/menus/NotificationScreen.dart';
+import 'package:flamingo_app/Services/auth_service.dart';
 import 'package:flamingo_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../Services/auth_service.dart';
 
+class LoginCub extends StatefulWidget {
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginCub({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginCub> createState() => _LoginCubState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
-  bool isLogin = true;
-  late Animation<double> containerSize;
-  late AnimationController animationController;
-  Duration animationDuration = Duration(milliseconds: 270);
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(vsync: this, duration: animationDuration);
-  }
-
-  @override
-  void dispose() {
-    animationController!.dispose();
-    super.dispose();
-  }
-
+class _LoginCubState extends State<LoginCub> {
   late String _email;
   late String _password;
-  late String userType;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,10 +25,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     double viewInset = MediaQuery.of(context).viewInsets.bottom;
     double defaultLoginSize = size.height - (size.height * 0.2);
     double defaultRegisterSize = size.height - (size.height * 0.1);
-    containerSize = Tween<double>(begin: size.height * 0.1, end: defaultRegisterSize).animate(CurvedAnimation(parent: animationController, curve: Curves.linear));
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body:Stack(
+      body: Stack(
         children: [
           Align(
             alignment: Alignment.center,
@@ -65,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     Text(
                       "Hoş Geldiniz",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24
                       ),
                     ),
 
@@ -76,8 +55,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                       width: size.width*0.8,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: kPrimaryColor.withAlpha(50)
+                          borderRadius: BorderRadius.circular(30),
+                          color: kPrimaryColor.withAlpha(50)
                       ),
                       child: TextField(
                         cursorColor: kPrimaryColor,
@@ -124,11 +103,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                         ),
                       ),
                       onPressed: ()async{
-                        bool isValid=await AuthService.login(_email,_password);
+                        bool isValid=await AuthService.loginclub(_email,_password);
                         if(isValid){
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',)));
-                            print("Giriş Başarılı");
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) => const FeedScreenClub(currentUserId: '',)));
+                          print("Giriş Başarılı");
                         }else{
                           print("Giriş Yapılamadı");
                         }
@@ -156,45 +135,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               ),
             ),
           ),
-          AnimatedBuilder(
-              animation: animationController,
-              builder: (context,child){
-                return buildClubContainer();
-              })
         ],
-      )
-
-
-    );
-  }
-  Widget buildClubContainer() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        width: double.infinity,
-        height: containerSize.value,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(100),
-                topRight: Radius.circular(100)
-            ),
-            color: kBackgroundColor
-        ),
-        alignment: Alignment.center,
-        child: GestureDetector(
-          onTap: (){
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const LoginCub()));
-          },
-          child: Text(
-            "Kulüp girişi ...",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 18
-
-            ),
-          ),
-        ),
       ),
     );
   }

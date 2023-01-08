@@ -2,57 +2,61 @@ import 'package:flamingo_app/Screens/menus/ChatScreen.dart';
 import 'package:flamingo_app/Screens/menus/CreateFlamScreen.dart';
 import 'package:flamingo_app/Screens/menus/HomeScreen.dart';
 import 'package:flamingo_app/Screens/menus/NotificationScreen.dart';
+import 'package:flamingo_app/Screens/menus/ProfilScreen.dart';
 import 'package:flamingo_app/Screens/menus/SearchScreen.dart';
 import 'package:flamingo_app/Screens/menus/akisScreen.dart';
+import 'package:flamingo_app/Widgets/navigation_bar.dart';
 import 'package:flamingo_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Widgets/navigation_bar.dart';
-
-class FeedScreenClub extends StatefulWidget {
-  const FeedScreenClub({Key? key,}) : super(key: key);
+class FeedScreen extends StatefulWidget {
+  final String currentUserId;
+  const FeedScreen({Key? key, required this.currentUserId,}) : super(key: key);
 
   @override
-  State<FeedScreenClub> createState() => _FeedScreenClubState();
+  State<FeedScreen> createState() => _FeedScreenState();
 }
 
-class _FeedScreenClubState extends State<FeedScreenClub> {
+class _FeedScreenState extends State<FeedScreen> {
   int _selectedTab=0;
-  final List<Widget>_feedScreens=[
-    HomeScreen(),
-    AkisScreen(),
-    NotificationScreen(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Clup Anasayfa'),
-        backgroundColor: kPrimaryColor,
-      ),
-      body:_feedScreens.elementAt(_selectedTab),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        child: Image.asset('assets/images/login.svg'),
-        onPressed:() {
-          Navigator.push(context,MaterialPageRoute(builder: (context) => const CreateFlamScreen()));
-        },
-      ),
+      body:[
+        HomeScreen(
+          currentUserId: widget.currentUserId,
+          visitedUserId: widget.currentUserId,
+        ),
+        AkisScreen(
+          currentUserId: widget.currentUserId,
+          visitedUserId: widget.currentUserId,
+        ),
+        SearchScreen(
+          currentUserId: widget.currentUserId,
+        ),
+        NotificationScreen(
+          currentUserId: widget.currentUserId,
+        ),
+        ProfilScreen(
+          currentUserId: widget.currentUserId,
+          visitedUserId: widget.currentUserId,
+        ),
+      ].elementAt(_selectedTab),
       bottomNavigationBar: CupertinoTabBar(
         onTap: (index){
           setState(() {
             _selectedTab=index;
           });
         },
-        activeColor: kPrimaryColor,
+        activeColor:kPrimaryColor,
         currentIndex: _selectedTab,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(icon: Icon(Icons.flash_on_sharp)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
-
+          BottomNavigationBarItem(icon: Icon(Icons.person)),
 
 
         ],
@@ -60,3 +64,5 @@ class _FeedScreenClubState extends State<FeedScreenClub> {
     );
   }
 }
+
+

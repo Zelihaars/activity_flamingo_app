@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:flamingo_app/Screens/FeedScreeen.dart';
+import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/login/LoginScreen.dart';
 import 'package:flamingo_app/Screens/menus/HomeScreen.dart';
 import 'package:flamingo_app/Screens/menus/ProfilScreen.dart';
@@ -57,8 +57,7 @@ class NavigationDrawer extends StatelessWidget {
     ),
       ),
     ));
-
-  Widget  buildMenuItems(BuildContext context) =>Container(
+  Widget buildMenuItems(BuildContext context) =>Container(
     padding: const EdgeInsets.all(24),
     child: Wrap(
       runSpacing:16 ,
@@ -75,9 +74,8 @@ class NavigationDrawer extends StatelessWidget {
          leading: const Icon(Icons.person_outline),
          title:const Text('Profilim'),
          onTap: ()=>{
-           Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const FeedScreen( currentUserId: '',
-             ))),
+           Navigator.push(context,
+               MaterialPageRoute(builder: (context)=>FeedScreen(currentUserId: '')))
          },
       ),
          const Divider(color: Colors.purple),

@@ -4,10 +4,10 @@ import 'package:flamingo_app/constants.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flamingo_app/constants.dart';
 
 
 class StorageService {
+
   static Future<String> uploadProfilePicture(String url, File imageFile) async {
     String? uniquePhotoId = Uuid().v4();
     File? image = await compressImage(uniquePhotoId, imageFile);
@@ -61,5 +61,17 @@ class StorageService {
       quality: 70,
     );
     return compressedImage;
+  }
+
+  static Future<String> uploadActivityPicture(File imageFile) async {
+    String uniquePhotoId = Uuid().v4();
+    File? image = await compressImage(uniquePhotoId, imageFile);
+
+    UploadTask uploadTask = storageRef
+        .child('images/etkinlikler/activity_$uniquePhotoId.jpg')
+        .putFile(image!);
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

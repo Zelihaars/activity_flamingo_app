@@ -1,4 +1,4 @@
-import 'package:flamingo_app/Screens/FeedScreeen.dart';
+import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/login/LoginScreen.dart';
 import 'package:flamingo_app/Screens/login/RegistrationClupScreen.dart';
 import 'package:flamingo_app/Services/auth_service.dart';

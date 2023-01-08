@@ -11,8 +11,8 @@ class RegistrationClupScreen extends StatefulWidget {
 }
 
 class _RegistrationClupScreenState extends State<RegistrationClupScreen> {
-  late String club_name;
-  late String club_alan;
+  late String name;
+  late String surname;
   late String _phone;
   late String _email;
   late String _password;
@@ -55,7 +55,7 @@ class _RegistrationClupScreenState extends State<RegistrationClupScreen> {
                             border: InputBorder.none,
                           ),
                           onChanged: (value) {
-                            club_name = value;
+                            name = value;
                           },
                         ),
                       ),
@@ -75,7 +75,7 @@ class _RegistrationClupScreenState extends State<RegistrationClupScreen> {
                             border: InputBorder.none,
                           ),
                           onChanged: (value) {
-                            club_alan = value;
+                            surname = value;
                           },
                         ),
                       ),
@@ -153,7 +153,7 @@ class _RegistrationClupScreenState extends State<RegistrationClupScreen> {
                           ),
                         ),
                         onPressed: ()async{
-                          bool isValid=await AuthService.login(_email,_password);
+                          bool isValid=await AuthService.ClubsignUp(name,surname,_email,_phone,_password);
                           if(isValid){
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) => const LoginScreen()));

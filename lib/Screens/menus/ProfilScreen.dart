@@ -1,7 +1,10 @@
+import 'package:flamingo_app/Models/Etkinlik.dart';
+import 'package:flamingo_app/Models/Tweet.dart';
 import 'package:flamingo_app/Models/UserModel.dart';
-import 'package:flamingo_app/Screens/EditProfileScreen.dart';
+import 'package:flamingo_app/Screens/menus/EditProfileScreen.dart';
 import 'package:flamingo_app/Services/DatabaseServices.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flamingo_app/Widgets/EtkinlikContainer.dart';
+import 'package:flamingo_app/Widgets/TweetContainer.dart';
 import 'package:flamingo_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +24,13 @@ class _ProfilScreenState extends State<ProfilScreen> {
   int _followersCount=0;
   int _followingCount=0;
   bool _isFollowing=false;
-
   int _profileSegmentedValue=0;
+  List<Tweet>? _allTweets;
+  List<Etkinlik>? _allEtkinlik;
+  List<Etkinlik>? _mediaActivity=[];
+  List<Tweet>? _mediaTweets=[];
   Map<int, Widget>_profileTabs = <int, Widget>{
-    0: Padding(
+    0: const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
         'Paylaşımlar',
@@ -35,10 +41,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
         ),
       ),
     ),
-    1: Padding(
+    1: const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
-        'Görseller',
+        'Etkinlikler',
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w700,
@@ -46,7 +52,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         ),
       ),
     ),
-    2: Padding(
+    2: const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
         'Beğeniler',
@@ -58,19 +64,38 @@ class _ProfilScreenState extends State<ProfilScreen> {
       ),
     ),
   };
-  Widget buildProfileWidgets(){
+  Widget buildProfileWidgets(UserModel author){
     switch(_profileSegmentedValue){
       case 0:
-        return Center(child: Text('Paylaşımlar',style: TextStyle(fontSize: 25),),);
-        break;
+        return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: _allTweets!.length,
+            itemBuilder: (context, index) {
+              return TweetContainer(
+                currentUserId: widget.currentUserId,
+                author: author,
+                tweet: _allTweets![index],
+              );
+            });
       case 1:
-        return Center(child: Text('Görseller',style: TextStyle(fontSize: 25),),);
+        return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: _allEtkinlik!.length,
+            itemBuilder: (context, index) {
+              return EtkinlikContainer(
+                currentUserId: widget.currentUserId,
+                author: author,
+                etkinlik: _allEtkinlik![index],
+              );
+            });
         break;
       case 2:
-        return Center(child: Text('Beğeniler',style: TextStyle(fontSize: 25),),);
+        return const Center(child: Text('Beğeniler',style: TextStyle(fontSize: 25),),);
         break;
       default:
-        return Center(child: Text('Bir şeyler yanlış gitti ',style: TextStyle(fontSize: 25),),);
+        return const Center(child: Text('Bir şeyler yanlış gitti ',style: TextStyle(fontSize: 25),),);
         break;
     }
   }
@@ -79,7 +104,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
     int followersCount=await DatabaseServices.followersNum(widget.visitedUserId);
     if(mounted){
       setState(() {
-        _followersCount=_followersCount;
+        _followersCount=followersCount;
       });
     }
   }
@@ -87,7 +112,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
     int followingCount=await DatabaseServices.followingNum(widget.visitedUserId);
     if(mounted){
       setState(() {
-        _followingCount=_followingCount;
+        _followingCount=followingCount;
       });
     }
   }
@@ -106,7 +131,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
       _followersCount--;
     });
   }
-
   followUser() {
     DatabaseServices.followUser(widget.currentUserId, widget.visitedUserId);
     setState(() {
@@ -121,8 +145,26 @@ class _ProfilScreenState extends State<ProfilScreen> {
       _isFollowing = isFollowingThisUser;
     });
   }
+  getAllTweets() async {
+    List<Tweet>? userTweets = (await DatabaseServices.getUserTweets(widget.visitedUserId)).cast<Tweet>();
+    if (mounted) {
+      setState(() {
+        _allTweets = userTweets;
+        _mediaTweets =
+            _allTweets!.where((element) => element.image.isNotEmpty).toList();
+      });
+    }
+  }
 
-
+  getAllActivity() async {
+    List<Etkinlik>? clubetkinlikler = (await DatabaseServices.getUserActivity(widget.visitedUserId)).cast<Etkinlik>();
+    if (mounted) {
+      setState(() {
+        _allEtkinlik = clubetkinlikler;
+        _mediaActivity =_allEtkinlik!.where((element) => element.image.isNotEmpty).toList();
+      });
+    }
+  }
 
   @override
   void initState(){
@@ -130,6 +172,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
     getFollowersCount();
     getFollowingCount();
     setupIsFollowing();
+    getAllTweets();
+    getAllActivity();
   }
   @override
   Widget build(BuildContext context) {
@@ -139,7 +183,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           future: usersRef.doc(widget.visitedUserId).get(),
           builder: (BuildContext context, AsyncSnapshot snapshot){
             if (!snapshot.hasData){
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation(kPrimaryColor),
                 ),
@@ -155,12 +199,13 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   height: 150,
                     decoration: BoxDecoration(
                         color: kPrimaryColor,
-                        image: userModel.coverImage.isEmpty
-                            ? null
-                            : DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(userModel.coverImage),
-                        )
+                      image:DecorationImage(
+                        fit: BoxFit.cover,
+                        image:userModel.coverImage.isEmpty
+                            ?AssetImage('assets/images/background.png')as ImageProvider
+                            : NetworkImage(userModel.coverImage)
+
+                      ),
                     ),
                   child:Padding(
                     padding: const EdgeInsets.symmetric(
@@ -169,7 +214,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:[
-                          SizedBox.shrink(),
+                          const SizedBox.shrink(),
                           widget.currentUserId==widget.visitedUserId?
                           PopupMenuButton(
                               icon:const Icon(
@@ -189,7 +234,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
 
                               }
                           )
-                              :SizedBox(),
+                              :const SizedBox(),
                         ]
                     ),
                   )
@@ -197,7 +242,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 Container(
                   transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -207,10 +252,12 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         children: [
                           CircleAvatar(
                             radius: 45,
-                            backgroundImage: NetworkImage(userModel.profilePicture??'assets/images/placeholder.png'),
+                            backgroundImage: userModel.profilePicture.isEmpty
+                                ? AssetImage('assets/images/placeholder.png') as  ImageProvider
+                                : NetworkImage(userModel.profilePicture),
                           ),
-                          widget.currentUserId==widget.visitedUserId?
-                          GestureDetector(
+                          widget.currentUserId==widget.visitedUserId
+                              ?GestureDetector(
                             onTap: ()async{
                               await Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfileScreen(
                                 user:userModel,
@@ -224,13 +271,13 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             child: Container(
                               width: 100,
                               height: 35,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
                                 border: Border.all(color: kPrimaryColor),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Düzenle',
                                   style: TextStyle(
@@ -247,7 +294,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             child: Container(
                               width: 100,
                               height: 35,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color:  _isFollowing?kPrimaryColor:Colors.white,
@@ -267,36 +314,36 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           )
                         ],
                       ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Text(
-                      userModel.name +" "+ userModel.surname,
-                      style: TextStyle(
+                     userModel.name +" "+ userModel.surname,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                     SizedBox(height: 10,),
+                     const SizedBox(height: 10,),
                        Text(
                       userModel.bio,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
-                    SizedBox(height: 15,),
+                    const SizedBox(height: 15,),
                     Row(
                       children: [
                         Text(
                           '$_followingCount Takip Edilen',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 2,
                           ),
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                           Text(
                           '$_followersCount Takipçi',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 2,
@@ -304,7 +351,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: CupertinoSlidingSegmentedControl(
@@ -322,7 +369,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     ],
                   ),
                 ),
-                buildProfileWidgets(),
+                buildProfileWidgets(userModel),
               ],
             );
           }

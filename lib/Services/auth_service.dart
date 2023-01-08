@@ -22,7 +22,7 @@ class AuthService {
           'profilePicture': '',
           'coverImage': '',
           'bio': '',
-          'userType':1
+          'userType':"user"
 
         });
         return true;
@@ -35,23 +35,23 @@ class AuthService {
     }
   }
 
-  static Future<bool> ClubsignUp(String club_name,String  club_alan, String email, String phone, String password) async {
+  static Future<bool> ClubsignUp(String name,String surname, String email, String phone, String password) async {
     try {
       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      User? signedInClub = authResult.user;
+      User? signedInUser = authResult.user;
 
-      if (signedInClub != null) {
-        _fireStore.collection('clubs').doc(signedInClub.uid).set({
-          'club_name':  club_name,
-          'club_alan': club_alan,
+      if (signedInUser != null) {
+        _fireStore.collection('users').doc(signedInUser.uid).set({
+          'name': name,
+          'surname': surname,
           'email': email,
           'phone':phone,
           'profilePicture': '',
           'coverImage': '',
           'bio': '',
-          'userType':0
+          'userType':"club"
         });
         return true;
       }
@@ -73,6 +73,18 @@ class AuthService {
       return false;
     }
   }
+
+  static Future<bool> loginclub(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   static void logout() {
     try {
       _auth.signOut();

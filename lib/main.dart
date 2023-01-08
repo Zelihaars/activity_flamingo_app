@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flamingo_app/Screens/FeedScreeen.dart';
+import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flamingo_app/Screens/login/LoginScreen.dart';
