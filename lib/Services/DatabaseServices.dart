@@ -96,6 +96,22 @@ class DatabaseServices{
         .get();
     return followingDoc.exists;
   }
+  static Future<bool> isUser(String currentUserId) async {
+    DocumentSnapshot userDoc = (await userRef
+        .doc(currentUserId)
+        .collection('users')
+        .where('userType',isGreaterThanOrEqualTo: 1)
+        .get()) as DocumentSnapshot<Object?>;
+    return userDoc.exists;
+  }
+  static Future<bool> isClub(String currentUserId) async {
+    DocumentSnapshot clubDoc = (await userRef
+        .doc(currentUserId)
+        .collection('users')
+        .where('userType',isGreaterThanOrEqualTo: 0)
+        .get()) as DocumentSnapshot<Object?>;
+    return clubDoc.exists;
+  }
 
 
   static void createTweet(Tweet tweet) {
@@ -249,6 +265,8 @@ class DatabaseServices{
     etkinlikRef.doc(etkinlik.authorId).collection('clubetkinlikler').add({
       'activityName': etkinlik.activityName,
       'activityPrice': etkinlik.activityPrice,
+      'activityLocation':etkinlik.activityLocation,
+      'activityDetail':etkinlik.activityDetail,
       'image': etkinlik.image,
       "authorId": etkinlik.authorId,
       "timestamp": etkinlik.timestamp,

@@ -20,6 +20,8 @@ class CreateActivityScreen extends StatefulWidget {
 class _CreateActivityScreenState extends State<CreateActivityScreen> {
   String? _activityPrice;
   String? _activityName;
+  String? _activityDetail;
+  String? _activityLocation;
   File? _pickedImage;
   bool _loading = false;
 
@@ -58,10 +60,10 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
           children: [
             SizedBox(height: 20),
             TextField(
-              maxLength: 270,
-              maxLines: 7,
+              maxLength: 100,
+              maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'Etkinlik adı',
+                hintText: 'Etkinlik Adı',
               ),
               onChanged: (value) {
                 _activityName = value;
@@ -70,16 +72,42 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
             SizedBox(height: 10),
 
             TextField(
-              maxLength: 270,
-              maxLines: 7,
+              maxLength: 100,
+              maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'Etkinlik fiyatı',
+                hintText: 'Etkinlik Fiyatı',
               ),
               onChanged: (value) {
                 _activityPrice = value;
               },
             ),
             SizedBox(height: 10),
+
+            TextField(
+              maxLength: 100,
+              maxLines: 1,
+              decoration: InputDecoration(
+                hintText: 'Etkinlik Yeri',
+              ),
+              onChanged: (value) {
+                _activityLocation = value;
+              },
+            ),
+            SizedBox(height: 10),
+
+            TextField(
+              maxLength: 100,
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: 'Etkinlik Detayı',
+              ),
+              onChanged: (value) {
+                _activityDetail = value;
+              },
+            ),
+            SizedBox(height: 10),
+
+
             _pickedImage == null
                 ? SizedBox.shrink()
                 : Column(
@@ -142,6 +170,8 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                       id: '',
                       activityName: _activityName!,
                       activityPrice: _activityPrice!,
+                      activityLocation: _activityLocation!,
+                      activityDetail: _activityDetail!,
                       image: image,
                       authorId: widget.currentUserId,
                       likes: 0,

@@ -1,5 +1,4 @@
 import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
-import 'package:flamingo_app/Screens/menusClub/FeedScreenClub.dart';
 import 'package:flamingo_app/Screens/login/LoginClub.dart';
 import 'package:flamingo_app/Screens/login/RegistrationScreen.dart';
 import 'package:flamingo_app/constants.dart';
@@ -184,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         child: GestureDetector(
           onTap: (){
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const LoginCub()));
+                .push(MaterialPageRoute(builder: (context) => const LoginScreenClub()));
           },
           child: Text(
             "Kulüp girişi ...",

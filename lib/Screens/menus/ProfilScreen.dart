@@ -1,8 +1,11 @@
 import 'package:flamingo_app/Models/Etkinlik.dart';
 import 'package:flamingo_app/Models/Tweet.dart';
 import 'package:flamingo_app/Models/UserModel.dart';
+import 'package:flamingo_app/Screens/WelcomeScreen.dart';
+import 'package:flamingo_app/Screens/menus/CreateFlamScreen.dart';
 import 'package:flamingo_app/Screens/menus/EditProfileScreen.dart';
 import 'package:flamingo_app/Services/DatabaseServices.dart';
+import 'package:flamingo_app/Services/auth_service.dart';
 import 'package:flamingo_app/Widgets/EtkinlikContainer.dart';
 import 'package:flamingo_app/Widgets/TweetContainer.dart';
 import 'package:flamingo_app/constants.dart';
@@ -64,6 +67,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       ),
     ),
   };
+
   Widget buildProfileWidgets(UserModel author){
     switch(_profileSegmentedValue){
       case 0:
@@ -178,6 +182,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        child: Image.asset('assets/images/plus.png'),
+        onPressed:() {
+          Navigator.push(context,MaterialPageRoute(builder: (context) => CreateFlamScreen(
+            currentUserId: widget.currentUserId,
+          )));
+        },
+      ),
       backgroundColor: Colors.white,
       body: FutureBuilder(
           future: usersRef.doc(widget.visitedUserId).get(),
@@ -224,15 +237,22 @@ class _ProfilScreenState extends State<ProfilScreen> {
                               ),itemBuilder:(_){
                             return <PopupMenuItem<String>>[
                               new PopupMenuItem(
-                                child: Text('Logout'),
+                                child: Text('Çıkış'),
                                 value: 'logout',
                               )
                             ];
 
                           },
                               onSelected: (selectedItem){
-
-                              }
+                                if (selectedItem == 'logout'){
+                                  AuthService.logout();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WelcomeScreen()));
+                                }
+                              },
                           )
                               :const SizedBox(),
                         ]

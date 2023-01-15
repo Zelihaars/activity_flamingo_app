@@ -28,10 +28,6 @@ class _FeedScreenState extends State<FeedScreen> {
           currentUserId: widget.currentUserId,
           visitedUserId: widget.currentUserId,
         ),
-        AkisScreen(
-          currentUserId: widget.currentUserId,
-          visitedUserId: widget.currentUserId,
-        ),
         SearchScreen(
           currentUserId: widget.currentUserId,
         ),
@@ -53,7 +49,6 @@ class _FeedScreenState extends State<FeedScreen> {
         currentIndex: _selectedTab,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Icon(Icons.flash_on_sharp)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),

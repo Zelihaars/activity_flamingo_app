@@ -20,6 +20,8 @@ final followersRef=_firestore.collection('followers');
 
 final followingRef=_firestore.collection('following');
 
+final userRef=_firestore.collection('users');
+
 final tweetsRef=_firestore.collection('tweets');
 
 final feedRefs=_firestore.collection('feeds');

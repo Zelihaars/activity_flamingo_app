@@ -22,7 +22,7 @@ class AuthService {
           'profilePicture': '',
           'coverImage': '',
           'bio': '',
-          'userType':"user"
+          'userType':1
 
         });
         return true;
@@ -51,7 +51,7 @@ class AuthService {
           'profilePicture': '',
           'coverImage': '',
           'bio': '',
-          'userType':"club"
+          'userType':0
         });
         return true;
       }

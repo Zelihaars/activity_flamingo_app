@@ -35,6 +35,8 @@ dependencies:
 
   date_field: ^3.0.0
   cupertino_icons: ^1.0.5
+  google_fonts: ^3.0.1
+  supercharged: ^2.1.1
   firebase_core:
   cloud_firestore:
   firebase_auth:
@@ -80,6 +82,31 @@ flutter:
     - assets/img/mountain.jpg
     - assets/img/trekking.jpg
     - assets/img/button-one.png
+    - assets/yer/elazig.jpg
+    - assets/yer/mardin.jpg
+    - assets/yer/tunceli.jpg
+    - assets/yer/mastar.jpg
+    -  assets/yer/palu.jpg
+    -  assets/yer/rafting.jpg
+    - assets/awan.png
+    - assets/back.png
+    - assets/bali.jpg
+    - assets/cari.png
+    - assets/Group.png
+    - assets/home.png
+    - assets/japan.jpg
+    - assets/map.png
+    - assets/Menu.png
+    - assets/Notif.png
+    - assets/nusa.jpg
+    - assets/paris.jpg
+    - assets/pesawat.png
+    - assets/rio.jpg
+    - assets/Setting.png
+    - assets/star.png
+    - assets/start.png
+    - assets/tokyo.jpg
+    - assets/user.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

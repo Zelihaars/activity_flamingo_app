@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:flamingo_app/Screens/WelcomeScreen.dart';
 import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/login/LoginScreen.dart';
 import 'package:flamingo_app/Screens/menus/HomeScreen.dart';
@@ -37,21 +38,6 @@ class NavigationDrawer extends StatelessWidget {
     ),
     child: Column(
       children: const[
-        CircleAvatar(
-          radius: 52,
-          backgroundImage: NetworkImage(
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-          ),
-        ),
-        SizedBox(height: 12),
-        Text(
-            'username',
-          style: TextStyle(fontSize: 28,color: Colors.white),
-        ),
-        Text(
-          'user@gmail.com',
-          style: TextStyle(fontSize: 16,color: Colors.white),
-        ),
 
       ],
     ),
@@ -75,43 +61,16 @@ class NavigationDrawer extends StatelessWidget {
          title:const Text('Profilim'),
          onTap: ()=>{
            Navigator.push(context,
-               MaterialPageRoute(builder: (context)=>FeedScreen(currentUserId: '')))
+               MaterialPageRoute(builder: (context)=>ProfilScreen(currentUserId: '', visitedUserId: '')))
          },
       ),
          const Divider(color: Colors.purple),
-        ListTile(
-         leading: const Icon(Icons.favorite_border),
-         title:const Text('Favorilerim'),
-         onTap: ()=>{
-           Navigator.of(context)
-               .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
-         },
-
-  ),
-
-        ListTile(
-         leading: const Icon(Icons.workspaces_outline),
-          title:const Text('Etkinliklerim'),
-
-          onTap: ()=>{
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
-          },
-      ),
-        ListTile(
-          leading: const Icon(Icons.account_tree_outlined),
-           title:const Text('Paylaşımlarım'),
-           onTap: ()=>{
-             Navigator.of(context)
-                 .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',))),
-           },
-      ),
         ListTile(
           leading: const Icon(Icons.logout_outlined),
          title:const Text('Çıkış'),
           onTap: ()=>{
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const LoginScreen())),
+                .push(MaterialPageRoute(builder: (context) => WelcomeScreen())),
           },
       ),
     ],

@@ -5,6 +5,8 @@ class Etkinlik{
   String authorId;
   String activityName;
   String activityPrice;
+  String activityLocation;
+  String activityDetail;
   String image;
   Timestamp timestamp;
   int add;
@@ -19,7 +21,11 @@ class Etkinlik{
       required this.authorId,
       required this.image,
       required this.activityName,
-      required this.activityPrice,});
+      required this.activityPrice,
+      required this.activityLocation,
+      required this.activityDetail
+
+      });
 
 
   factory Etkinlik.fromDoc(DocumentSnapshot doc){
@@ -30,6 +36,8 @@ class Etkinlik{
       activityName: doc['activityName'],
       image: doc['image'],
       activityPrice: doc['activityPrice'],
+      activityLocation: doc['activityLocation'],
+      activityDetail: doc['activityDetail'],
       timestamp: doc['timestamp'],
       add: doc['likes'],
       likes: doc['retweets'],
