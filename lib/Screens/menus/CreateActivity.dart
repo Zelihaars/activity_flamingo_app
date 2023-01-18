@@ -98,6 +98,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
             TextField(
               maxLength: 100,
               maxLines: 4,
+
               decoration: InputDecoration(
                 hintText: 'Etkinlik Detayı',
               ),

@@ -42,10 +42,10 @@ final events = [
       event: "Hiking"),
   Place(
       imageUrl: "assets/yer/rafting.jpg",
-      city: "Elazığ",
-      country: "Palu",
+      city: "Tunceli",
+      country: "Munzur",
       description:
-      "Murat Nehrinde macera dolu bir rafting etkinliğine katılmak ister misiniz.",
+      "Munzur suyunda macera dolu bir rafting etkinliğine katılmak ister misiniz.",
       event: "Rafting"),
   Place(
       imageUrl: "assets/yer/mastar.jpg",

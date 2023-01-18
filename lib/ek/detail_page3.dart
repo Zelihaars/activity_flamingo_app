@@ -1,10 +1,11 @@
+import 'package:flamingo_app/Screens/odeme/credit_card_page.dart';
+import 'package:flamingo_app/constants.dart';
 import 'package:flamingo_app/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flamingo_app/constants.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage3 extends StatelessWidget {
 
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class DetailPage extends StatelessWidget {
                 top: 400,
               ),
               decoration: BoxDecoration(
-                color:bgColor2,
+                color: bgColor2,
               ),
               child: Container(
                 margin: EdgeInsets.only(left: 30, right: 30),
@@ -28,18 +29,14 @@ class DetailPage extends StatelessWidget {
                     ),
                     Text(
                       'Açıklama',
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
+                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
                       height: 9,
                     ),
                     Text(
-                      'Tarihi bir kale olan Palu Kalesinde bizimle beraber eşşiz bir etkinliğe ne dersiniz',
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
+                      'Mastar dağı eteklerinde uzman trekking ekibimizle tırmanış yapmak ister misiniz',
+                      style: TextStyle(color: Colors.white),
                     )
                   ],
                 ),
@@ -63,14 +60,14 @@ class DetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Palu Kalesi,",
+                      "Mastar Dağı",
                       style: textStyle1.copyWith(color: mainCOlor),
                     ),
                     SizedBox(
                       width: 9,
                     ),
                     Text(
-                      "Elazığ",
+                      "Maden",
                       style: textStyle1.copyWith(color: mainCOlor),
                     ),
                   ],
@@ -98,10 +95,8 @@ class DetailPage extends StatelessWidget {
                           width: 9,
                         ),
                         Text(
-                          '4.92',
-                          style: TextStyle(
-                            color: Colors.white
-                          ),
+                          '25 kişi ',
+                          style: TextStyle(color: Colors.white),
                         )
                       ],
                     ),
@@ -115,17 +110,15 @@ class DetailPage extends StatelessWidget {
                               borderRadius:
                               BorderRadius.all(Radius.circular(12))),
                           child: Center(
-                            child: Image.asset('assets/awan.png'),
+                            child: Image.asset('assets/star.png'),
                           ),
                         ),
                         SizedBox(
                           width: 9,
                         ),
                         Text(
-                          '27ºC',
-                          style: TextStyle(
-                              color: Colors.white
-                          ),
+                          'Maden',
+                          style: TextStyle(color: Colors.white),
                         )
                       ],
                     ),
@@ -139,17 +132,15 @@ class DetailPage extends StatelessWidget {
                               borderRadius:
                               BorderRadius.all(Radius.circular(12))),
                           child: Center(
-                            child: Image.asset('assets/pesawat.png'),
+                            child: Image.asset('assets/star.png'),
                           ),
                         ),
                         SizedBox(
                           width: 9,
                         ),
                         Text(
-                          '9 Jam',
-                          style: TextStyle(
-                              color: Colors.white
-                          ),
+                          '22 Ocak',
+                          style: TextStyle(color: Colors.white),
                         )
                       ],
                     ),
@@ -163,16 +154,17 @@ class DetailPage extends StatelessWidget {
               height: 400,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/nusa.jpg'), fit: BoxFit.cover),
+                      image: AssetImage('assets/yer/mastar.jpg'),
+                      fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(40),
                       bottomRight: Radius.circular(40))),
             ),
           ),
           GestureDetector(
-          onTap: (){
-            Navigator.pop(context);
-          },
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
           SafeArea(
               child: Container(
@@ -195,29 +187,32 @@ class DetailPage extends StatelessWidget {
                     children: [
                       Text(
                         "Fiyat",
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        "50 TL",
+                        "70 TL",
                         style: textStyle2.copyWith(color: mainCOlor),
                       ),
                     ],
                   ),
                   ElevatedButton(
-                    child: Text('Rezerve et'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kPrimaryColor,
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // <-- Radius
+                      child: Text('Rezerve et'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                        ),
                       ),
-                    ),
-                    onPressed: () =>
-                       print("ödeme yapıldı")
-                  ),
-
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreditCardPage(),
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),

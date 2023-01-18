@@ -37,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   late String _password;
   late String userType;
 
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -82,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                         cursorColor: kPrimaryColor,
                         decoration: InputDecoration(
                           icon: Icon(Icons.email,color: kPrimaryColor,),
+
                           hintText: 'email adresinizi girin',
                           border: InputBorder.none,
                         ),
@@ -99,12 +102,23 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                           color: kPrimaryColor.withAlpha(50)
                       ),
                       child: TextField(
-                        obscureText: true,
+                        obscureText: _isObscure,
                         cursorColor: kPrimaryColor,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.password,color: kPrimaryColor,),
+
+                          prefixIcon: IconButton(
+                              icon: Icon(Icons.password,color: kPrimaryColor),
+                              alignment: Alignment.topLeft,
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              }
+                          ),
+
                           hintText: 'şifrenizi girin',
                           border: InputBorder.none,
+
                         ),
                         onChanged: (value) {
                           _password = value;
@@ -129,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                 .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',)));
                             print("Giriş Başarılı");
                         }else{
+                          _showDialog(context);
                           print("Giriş Yapılamadı");
                         }
                       },
@@ -197,4 +212,35 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       ),
     );
   }
+
+
+}
+
+void _showDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Uyarı"),
+        content: new Text(
+            "kullanıcı maili ya da şifre yanlış",
+          style: TextStyle(
+            color: Colors.red
+          ),
+        ),
+
+        actions: <Widget>[
+          new ElevatedButton(
+            child: new Text("Kapat"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kPrimaryColor,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

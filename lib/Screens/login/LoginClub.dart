@@ -29,6 +29,9 @@ class _LoginScreenClubState extends State<LoginScreenClub> {
   late String _email;
   late String _password;
   late String userType;
+
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -90,10 +93,18 @@ class _LoginScreenClubState extends State<LoginScreenClub> {
                             color: kPrimaryColor.withAlpha(50)
                         ),
                         child: TextField(
-                          obscureText: true,
+                          obscureText: _isObscure,
                           cursorColor: kPrimaryColor,
                           decoration: InputDecoration(
-                            icon: Icon(Icons.password,color: kPrimaryColor,),
+
+                            prefixIcon: IconButton(
+                              icon: Icon(Icons.password,color: kPrimaryColor),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            }
+                            ),
                             hintText: 'şifrenizi girin',
                             border: InputBorder.none,
                           ),
@@ -101,6 +112,7 @@ class _LoginScreenClubState extends State<LoginScreenClub> {
                             _password = value;
                           },
                         ),
+
                       ),
                       SizedBox(height: 5,),
                       ElevatedButton(
@@ -117,9 +129,10 @@ class _LoginScreenClubState extends State<LoginScreenClub> {
                           bool isValid=await AuthService.login(_email,_password);
                           if(isValid){
                             Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) => const FeedScreen(currentUserId: '',)));
+                                .push(MaterialPageRoute(builder: (context) => const FeedScreenClub(currentUserId: '')));
                             print("Giriş Başarılı");
                           }else{
+                            _showDialog(context);
                             print("Giriş Yapılamadı");
                           }
                         },
@@ -154,4 +167,32 @@ class _LoginScreenClubState extends State<LoginScreenClub> {
     );
 
   }
+}
+void _showDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Uyarı"),
+        content: new Text(
+          "kullanıcı maili ya da şifre yanlış",
+          style: TextStyle(
+              color: Colors.red
+          ),
+        ),
+
+        actions: <Widget>[
+          new ElevatedButton(
+            child: new Text("Kapat"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kPrimaryColor,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

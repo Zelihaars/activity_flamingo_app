@@ -45,6 +45,12 @@ dependencies:
   flutter_image_compress:
   path_provider:
   uuid:
+  flutter_credit_card: ^3.0.4
+  webview_flutter_plus: ^0.3.0+2
+  http: ^0.13.5
+  google_sign_in: ^5.2.1
+  provider:
+
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +113,7 @@ flutter:
     - assets/start.png
     - assets/tokyo.jpg
     - assets/user.jpg
+    - assets/google_logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -278,7 +278,7 @@ class DatabaseServices{
   static Future<List> getUserActivity(String userId) async {
     QuerySnapshot userActivitySnap = await etkinlikRef
         .doc(userId)
-        .collection('userActivity')
+        .collection('clubetkinlikler')
         .orderBy('timestamp', descending: true)
         .get();
     List<Etkinlik> clubetkinlikler =

@@ -32,8 +32,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
   List<Etkinlik>? _allEtkinlik;
   List<Etkinlik>? _mediaActivity=[];
   List<Tweet>? _mediaTweets=[];
-  Map<int, Widget>_profileTabs = <int, Widget>{
-    0: const Padding(
+  Map<int, Widget> _profileTabs = <int, Widget>{
+    0: Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
         'Paylaşımlar',
@@ -44,21 +44,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
         ),
       ),
     ),
-    1: const Padding(
+    1: Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
-        'Etkinlikler',
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-        ),
-      ),
-    ),
-    2: const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Text(
-        'Beğeniler',
+        'Görseller',
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w700,
@@ -68,8 +57,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
     ),
   };
 
-  Widget buildProfileWidgets(UserModel author){
-    switch(_profileSegmentedValue){
+  Widget buildProfileWidgets(UserModel author) {
+    switch (_profileSegmentedValue) {
       case 0:
         return ListView.builder(
             shrinkWrap: true,
@@ -82,27 +71,27 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 tweet: _allTweets![index],
               );
             });
+        break;
       case 1:
         return ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: _allEtkinlik!.length,
+            itemCount: _mediaTweets!.length,
             itemBuilder: (context, index) {
-              return EtkinlikContainer(
+              return TweetContainer(
                 currentUserId: widget.currentUserId,
                 author: author,
-                etkinlik: _allEtkinlik![index],
+                tweet: _mediaTweets![index],
               );
             });
         break;
-      case 2:
-        return const Center(child: Text('Beğeniler',style: TextStyle(fontSize: 25),),);
-        break;
       default:
-        return const Center(child: Text('Bir şeyler yanlış gitti ',style: TextStyle(fontSize: 25),),);
+        return Center(
+            child: Text('Birşeyler yanlış gitti', style: TextStyle(fontSize: 25)));
         break;
     }
   }
+
 
   getFollowersCount()async{
     int followersCount=await DatabaseServices.followersNum(widget.visitedUserId);

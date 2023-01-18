@@ -63,7 +63,8 @@ class AuthService {
     }
   }
 
-  static Future<bool> login(String email, String password) async {
+  static Future<bool> login(String email, String password,) async {
+
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return true;

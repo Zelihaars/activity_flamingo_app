@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flamingo_app/Models/Etkinlik.dart';
 import 'package:flamingo_app/Models/Tweet.dart';
 import 'package:flamingo_app/Models/UserModel.dart';
@@ -6,7 +7,7 @@ import 'package:flamingo_app/Screens/WelcomeScreen.dart';
 import 'package:flamingo_app/Screens/menus/CreateActivity.dart';
 import 'package:flamingo_app/Screens/menus/CreateFlamScreen.dart';
 import 'package:flamingo_app/Screens/menus/EditProfileScreen.dart';
-import 'package:flamingo_app/Screens/menus/detail_page.dart';
+import 'package:flamingo_app/ek/detail_page.dart';
 import 'package:flamingo_app/Services/DatabaseServices.dart';
 import 'package:flamingo_app/Services/auth_service.dart';
 import 'package:flamingo_app/Widgets/EtkinlikContainer.dart';
@@ -15,11 +16,13 @@ import 'package:flamingo_app/Widgets/event.dart';
 import 'package:flamingo_app/Widgets/navigation_bar.dart';
 import 'package:flamingo_app/Widgets/place_card.dart';
 import 'package:flamingo_app/constants.dart';
+import 'package:flamingo_app/ek/detail_page1.dart';
+import 'package:flamingo_app/ek/detail_page3.dart';
 import 'package:flamingo_app/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flamingo_app/Widgets/custom_tabbar.dart';
-
+Size? size;
 class HomeScreen extends StatefulWidget {
   final String currentUserId;
   final String visitedUserId;
@@ -34,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _profileSegmentedValue=0;
   // bool _isUser=true;
-   bool _isUser=false;
+
   List<Tweet>? _allTweets;
   List<Etkinlik>? _allEtkinlik;
 
@@ -73,25 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
     }
   }
-  userOrclub(){
-    if (_isUser) {
-      user();
-    } else {
-      club();
-    }
-  }
-  user() {
-    DatabaseServices.isUser(widget.currentUserId);
-    setState(() {
-      _isUser=true;
-    });
-  }
-  club() {
-    DatabaseServices.isClub(widget.currentUserId);
-    setState(() {
-      _isUser = false;
-    });
-  }
+
+
   @override
   void initState(){
     super.initState();
@@ -113,13 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         child: Image.asset('assets/images/plus.png'),
         onPressed:() {
-          _isUser?
           Navigator.push(context,MaterialPageRoute(builder: (context) => CreateFlamScreen(
             currentUserId: widget.currentUserId,
-          )))
-          :
-          Navigator.push(context,MaterialPageRoute(builder: (context) => CreateActivityScreen(
-          currentUserId: widget.currentUserId,
           )));
         },
       ),
@@ -129,25 +110,10 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0.5,
         title: TextField(
 
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical:15),
-            hintText: 'Ara...',
-            hintStyle: TextStyle(
-              color:Colors.white,
-            ),
-            border: InputBorder.none,
-            prefixIcon: Icon(Icons.search,color:Colors.white,),
-            suffixIcon: IconButton(
-              icon:Icon(
-                Icons.clear,color: Colors.white,
-              ), onPressed: () {  },
 
-            ),
-            filled: true,
-          ),
         ),
       ),
-      drawer: NavigationDrawer(currentUserId: '',),
+
       backgroundColor: Colors.white,
       body: FutureBuilder(
           future: usersRef.doc(widget.visitedUserId).get(),
@@ -206,33 +172,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
                      ],
                    ),
-                   Container(
-                     width: 100,
-                     height: 35,
-                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(20),
-                       color: Colors.white,
-                       border: Border.all(color: kPrimaryColor),
-                     ),
-                     child: Center(
-                       child: Text(
-                         _isUser? 'Üye':'Kulüp',
-                         style: TextStyle(
-                             fontSize: 12,
-                             color:  kPrimaryColor,
-                             fontWeight: FontWeight.bold
-                         ),
-                       ),
-                     ),
-                   ),
+
                  ],
                ),
              ),
              Container(
                margin: EdgeInsets.only(top: 25, left: 30),
                child: Text(
-                 _isUser? 'Etkinliklere katılmaya hazır mısın':'Etkinlik oluşturmaya hazır mısın',
+                 'Etkinliklere katılmaya hazır mısın',
                  style: TextStyle(
                      fontSize: 22,
                      fontWeight: FontWeight.bold,
@@ -240,49 +187,17 @@ class _HomeScreenState extends State<HomeScreen> {
                  ),
                ),
              ),
-             Container(
-                 height: 30,
-                 margin: EdgeInsets.only(top: 25, left: 30),
-                 child: ListView.builder(
-                     scrollDirection: Axis.horizontal,
-                     itemCount: titles.length,
-                     itemBuilder: (_, index) {
-                       return Padding(
-                         padding: const EdgeInsets.only(right: 30),
-                         child: Column(
-                           children: [
-                             Text(
-                               titles[index],
-                               style: textStyle4.copyWith(
-                                   color: (index == 0) ? mainCOlor : Colors.black),
-                             ),
-                             (index == 0)
-                                 ? Container(
-                               width: 20,
-                               height: 2,
-                               decoration: BoxDecoration(
-                                   color: mainCOlor,
-                                   borderRadius:
-                                   BorderRadius.all(Radius.circular(4))),
-                             )
-                                 : SizedBox()
-                           ],
-                         ),
-                       );
-                     })),
+
              Container(
                margin: EdgeInsets.only(top: 36, left: 30, right: 30),
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    Text(
-                     "Popüler Yerler",
+                     "Şehirler",
                      style: textStyle2,
                    ),
-                   Text(
-                     "Tümünü gör",
-                     style: textStyle4,
-                   )
+
                  ],
                ),
              ),
@@ -302,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                      );
                    }),
              ),
+
              Container(
                margin: EdgeInsets.only(left: 30, right: 30, top: 40),
                child: Row(
@@ -330,6 +246,13 @@ class _HomeScreenState extends State<HomeScreen> {
                        onTap: (){
                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(),),);
                        },
+                       onDoubleTap: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage1(),),);
+                       },
+                       onLongPress: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage3(),),);
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage3(),),);
+                       },
                        child: Container(
                          child: Event(
                            place: events[index],
@@ -350,6 +273,51 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
+      ),
+    );
+  }
+}
+class Categories extends StatelessWidget {
+  final String image;
+  final String categoryName;
+  final Function()? onTap;
+  const Categories({
+    Key? key,
+    required this.onTap,
+    required this.categoryName,
+    required this.image,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.all(12.0),
+        width: size!.width / 2 - 20,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(
+              image,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black.withOpacity(0.7),
+          ),
+          child: Center(
+            child: Text(
+              categoryName,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -9,6 +9,8 @@ const kBackgroundColor = Color(0xFFE5E5E5);
 const grayColor=Color(0xFF7D7777);
 const kOrangeColor=Color(0xFFFF7300);
 const double defaultPadding = 16.0;
+const cardNumber = '0942604324324310';
+
 
 final _firestore=FirebaseFirestore.instance;
 
