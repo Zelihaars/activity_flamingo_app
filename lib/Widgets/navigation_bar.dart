@@ -5,6 +5,7 @@ import 'package:flamingo_app/Screens/login/LoginScreen.dart';
 import 'package:flamingo_app/Screens/menus/HomeScreen.dart';
 import 'package:flamingo_app/Screens/menus/ProfilScreen.dart';
 import 'package:flamingo_app/constants.dart';
+import 'package:flamingo_app/ek/etkinliklerim.dart';
 import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -57,11 +58,11 @@ class NavigationDrawer extends StatelessWidget {
          },
       ),
         ListTile(
-         leading: const Icon(Icons.person_outline),
-         title:const Text('Profilim'),
+         leading: const Icon(Icons.local_activity_outlined),
+         title:const Text('Etkinliklerim'),
          onTap: ()=>{
            Navigator.push(context,
-               MaterialPageRoute(builder: (context)=>ProfilScreen(currentUserId: '', visitedUserId: '')))
+               MaterialPageRoute(builder: (context)=>Etkinliklerim()))
          },
       ),
          const Divider(color: Colors.purple),

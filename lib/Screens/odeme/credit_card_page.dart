@@ -80,7 +80,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
             // fonksiyon(cardNumber,cvvCode,cardHolderName,expireMonth,expireYear)
           } else {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Lütfen Tüm Değerleri Doldurunuz'),
+              content: Text('Ödeme başarıyla gerçekleşti'),
               duration: Duration(seconds: 1),
               backgroundColor: Colors.red,
             ));

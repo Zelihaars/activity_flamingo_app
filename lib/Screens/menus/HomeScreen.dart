@@ -18,6 +18,8 @@ import 'package:flamingo_app/Widgets/place_card.dart';
 import 'package:flamingo_app/constants.dart';
 import 'package:flamingo_app/ek/detail_page1.dart';
 import 'package:flamingo_app/ek/detail_page3.dart';
+import 'package:flamingo_app/ek/elazig.dart';
+import 'package:flamingo_app/ek/tunceli.dart';
 import 'package:flamingo_app/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'Su ',
       'Kültürel'
     ];
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
@@ -108,11 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: kPrimaryColor,
         centerTitle: true,
         elevation: 0.5,
-        title: TextField(
 
-
-        ),
       ),
+      drawer: NavigationDrawer(currentUserId: '',),
 
       backgroundColor: Colors.white,
       body: FutureBuilder(
@@ -208,11 +209,23 @@ class _HomeScreenState extends State<HomeScreen> {
                    scrollDirection: Axis.horizontal,
                    itemCount: places.length,
                    itemBuilder: (_, index) {
-                     return Padding(
-                       padding: const EdgeInsets.only(right: 20),
-                       child: PlaceCard(
-                         place: places[index],
-                         index: index,
+                     return GestureDetector(
+                       onTap: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Elazig(),
+                         ),);
+                       },
+                       onLongPress: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Tunceli(),
+                         ),);
+                       },
+
+                       child: Container(
+                         child: PlaceCard(
+                           place: places[index],
+                           index: index,
+                         ),
+                         padding: const EdgeInsets.only(right: 20),
+
                        ),
                      );
                    }),
@@ -251,8 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
                        },
                        onLongPress: (){
                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage3(),),);
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage3(),),);
                        },
+
                        child: Container(
                          child: Event(
                            place: events[index],
@@ -273,51 +286,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-      ),
-    );
-  }
-}
-class Categories extends StatelessWidget {
-  final String image;
-  final String categoryName;
-  final Function()? onTap;
-  const Categories({
-    Key? key,
-    required this.onTap,
-    required this.categoryName,
-    required this.image,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.all(12.0),
-        width: size!.width / 2 - 20,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              image,
-            ),
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.black.withOpacity(0.7),
-          ),
-          child: Center(
-            child: Text(
-              categoryName,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

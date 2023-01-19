@@ -1,3 +1,7 @@
+import 'package:flamingo_app/ek/detail_page.dart';
+import 'package:flamingo_app/ek/detail_page1.dart';
+import 'package:flamingo_app/ek/detail_page3.dart';
+
 class Place {
   final String imageUrl;
   final String country;
@@ -5,8 +9,11 @@ class Place {
   final String description;
   final String event;
 
+  static List url = [DetailPage(), DetailPage1(), DetailPage3()] ;
+
   Place({required this.city, required this.country, required this.description, required this.imageUrl, required this.event});
 }
+
 
 final places = [
   Place(
@@ -16,6 +23,7 @@ final places = [
       description:
       "Elazığ, turizm potansiyeli yüksek olan bir ilimizdir. Târihî eserleri, tabiî güzellikleri ve zengin folkloruyla turisti çeken özelliklere sâhiptir.",
       event: ""),
+
   Place(
       imageUrl: "assets/yer/mardin.jpg",
       city: "Mardin",
@@ -40,6 +48,7 @@ final events = [
       description:
       "Tarihi bir kale olan Palu Kalesi'nde bizimle beraber eşşiz bir etkinliğe ne dersiniz",
       event: "Hiking"),
+
   Place(
       imageUrl: "assets/yer/rafting.jpg",
       city: "Tunceli",
