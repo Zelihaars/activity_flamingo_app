@@ -1,4 +1,4 @@
-# flamingo_app
+# activity_flamingo_app
 
 A new Flutter project.
 
