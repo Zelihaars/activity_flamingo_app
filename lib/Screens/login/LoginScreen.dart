@@ -1,6 +1,7 @@
 import 'package:flamingo_app/Screens/menus/FeedScreeen.dart';
 import 'package:flamingo_app/Screens/login/LoginClub.dart';
 import 'package:flamingo_app/Screens/login/RegistrationScreen.dart';
+import 'package:flamingo_app/Widgets/sifremi_unuttum.dart';
 import 'package:flamingo_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -150,31 +151,30 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
                     ),
                     SizedBox(height: 20,),
+                    
                     ElevatedButton(
-                      child: Text('Google ile Giriş '),
+                      child: Text('Şifremi unuttum '),
                       style: ElevatedButton.styleFrom(
                         elevation: 5,
-                        padding: const EdgeInsets.symmetric(horizontal: 95, vertical: 20),
-                        backgroundColor:kOrangeColor,
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                        backgroundColor:Colors.blueGrey,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                          borderRadius: BorderRadius.circular(3), // <-- Radius
                         ),
                       ),
                       onPressed: ()async{
-
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) => const SifremiDegistir()));
                       },
 
                     ),
+
                   ],
                 ),
               ),
             ),
           ),
-          AnimatedBuilder(
-              animation: animationController,
-              builder: (context,child){
-                return buildClubContainer();
-              })
+
         ],
       )
 

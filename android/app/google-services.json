@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1043392319848",
-    "project_id": "flamingo-flutter-d7418",
-    "storage_bucket": "flamingo-flutter-d7418.appspot.com"
+    "project_number": "79777775797",
+    "project_id": "flamingo-flutter-7e885",
+    "storage_bucket": "flamingo-flutter-7e885.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043392319848:android:9f9efb33d5636741e3c6dd",
+        "mobilesdk_app_id": "1:79777775797:android:5e42d183ccfdf6654c3efc",
         "android_client_info": {
           "package_name": "com.example.flamingo_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1043392319848-u48h9ih05l3cncjoh913m06ce59gcgjq.apps.googleusercontent.com",
+          "client_id": "79777775797-oi085ih9infpk5r2m2anqhg24r6c8s2o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBilcLzbF6-Z9Zhu8HFpkxTc23HSpOmYcw"
+          "current_key": "AIzaSyBLVhQcmOKg-hmFA3mrMWl1peIdfc-yAA4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1043392319848-u48h9ih05l3cncjoh913m06ce59gcgjq.apps.googleusercontent.com",
+              "client_id": "79777775797-oi085ih9infpk5r2m2anqhg24r6c8s2o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
